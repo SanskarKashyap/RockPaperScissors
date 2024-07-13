@@ -1,5 +1,5 @@
 let player = document.querySelector("#player-score");
-let Computer = document.querySelector("#computer-score");
+let computer = document.querySelector("#computer-score");
 
 let choices = document.querySelectorAll(".choice");
 let WhoWin = document.querySelector("#WhoWin");
@@ -25,7 +25,9 @@ const GamePlay = (userChoise) => {
 const Result = (userChoice, computerChoice) => {
   if (userChoice === computerChoice) {
     console.log("Draw");
-    WhoWin.innerText = "Draw"
+    WhoWin.innerText = "Draw";
+    WhoWin.style.backgroundColor = "purple";
+
     return null; // return null for a draw
   } else {
     const userWin =
@@ -35,27 +37,24 @@ const Result = (userChoice, computerChoice) => {
         ? true
         : false;
 
-    return PrintResult(userWin);
+    return PrintResult(userWin, userChoice, computerChoice);
   }
 };
 
-
-const PrintResult = (userWin) => {
-    let WhoWin = document.getElementById('WhoWin'); 
-    if (WhoWin) {
-        WhoWin.innerText = userWin ? "You Win !" : "Computer Win !";
-    }
-
-    if (userWin) {
-        player.innerText = parseInt(player.innerText) + 1;
-    } else {
-        Computer.innerText = parseInt(Computer.innerText) + 1;
-    }
-
-    console.log(userWin ? "You win" : "You lose");
+const PrintResult = (userWin, userChoice, computerChoice) => {
+  let WhoWin = document.getElementById("WhoWin");
+  if (WhoWin) {
+    WhoWin.innerText = userWin
+      ? `You Win! Your ${userChoice} beats ${computerChoice}`
+      : `Computer Wins! Your ${userChoice} lost to ${computerChoice}`;
+    WhoWin.style.backgroundColor = userWin ? "green" : "red";
+  }
+  if (userWin) {
+    player.innerText = parseInt(player.innerText) + 1;
+  } else {
+    computer.innerText = parseInt(computer.innerText) + 1;
+  }
 };
-
-  
 
 //for each loop
 choices.forEach((choise) => {

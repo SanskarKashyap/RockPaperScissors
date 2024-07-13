@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock Paper Scissors</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        background-color: #212022;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 5%;
+        height: 100vh;
+      }
+
+      h1 {
+        font-size: 36px;
+        margin-bottom: 0;
+        background-color: rgb(23, 23, 23);
+        color: white;
+        animation: textChange 5s infinite linear;
+      }
+
+      .choices {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .choice {
+        width: 120px;
+        /* Adjust this as needed */
+        aspect-ratio: 1 / 1;
+        /* Ensures a square */
+        object-fit: cover;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
+
+      .choice:hover {
+        cursor: pointer;
+        /* opacity: 50%; */
+        background-color: rgb(84, 52, 105);
+        border-radius: 40%;
+        transform: scale(1.2); /* Optional: Add a hover effect */
+        transition: transform 0.5s;
+      }
+
+      .choice img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+
+      .score {
+        margin-top: 15%;
+        font-size: 200%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        color: aliceblue;
+        animation: textChange 5s infinite linear;
+      }
+
+      #WhoWin {
+        font-size: 24px;
+        margin-top: 15%;
+        display: inline;
+        background-color: rgb(84, 52, 105);
+        color: white;
+        padding: 1rem;
+        border-radius: 1rem;
+      }
+
+      @keyframes textChange {
+        0% {
+          color: #ff0000; /* Red */
+        }
+        12.5% {
+          color: #ff7300; /* Orange */
+        }
+        25% {
+          color: #fffb00; /* Yellow */
+        }
+        37.5% {
+          color: #48ff00; /* Green */
+        }
+        50% {
+          color: #00ffd5; /* Cyan */
+        }
+        62.5% {
+          color: #002bff; /* Blue */
+        }
+        75% {
+          color: #7a00ff; /* Purple */
+        }
+        87.5% {
+          color: #ff00c8; /* Magenta */
+        }
+        100% {
+          color: #ff0000; /* Back to Red */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Rock Paper Scissors</h1>
+    <div class="container">
+      <div class="choices">
+        <div class="choice" id="rock">✊</div>
+        <div class="choice" id="paper">✋</div>
+        <div class="choice" id="scissors">✌️</div>
+      </div>
+      <div class="score">
+        <p>You: <span id="player-score">0</span></p>
+        <p>Computer: <span id="computer-score">0</span></p>
+      </div>
+      <div id="WhoWin">Play your move</div>
+    </div>
+    <script>
+      let player = document.querySelector("#player-score");
+      let computer = document.querySelector("#computer-score");
+
+      let choices = document.querySelectorAll(".choice");
+      let WhoWin = document.querySelector("#WhoWin");
+
+      const GeneratedChoise = () => {
+        const option = ["rock", "paper", "scissors"];
+        // getting Random whole number between 0 and 2 (one less then 3)
+        // https://www.youtube.com/watch?v=_V33HCZWLDQ&list=PLGjplNEQ1it_oTvuLRNqXfz_v_0pq6unW&index=11
+        const randomInt = Math.floor(Math.random() * 3);
+        return option[randomInt];
+      };
+
+      const GamePlay = (userChoise) => {
+        console.log(userChoise + " is clicked");
+        //Generate Coumputer Choise
+        const ComputerChoise = GeneratedChoise();
+        console.log(ComputerChoise + " is Choised");
+        const result = Result(userChoise, ComputerChoise);
+        console.log(result);
+      };
+
+      //ternary operator instead of if-else statements
+      const Result = (userChoice, computerChoice) => {
+        if (userChoice === computerChoice) {
+          console.log("Draw");
+          WhoWin.innerText = "Draw";
+          WhoWin.style.backgroundColor = "purple";
+
+          return null; // return null for a draw
+        } else {
+          const userWin =
+            (userChoice === "rock" && computerChoice === "scissors") ||
+            (userChoice === "paper" && computerChoice === "rock") ||
+            (userChoice === "scissors" && computerChoice === "paper")
+              ? true
+              : false;
+
+          return PrintResult(userWin, userChoice, computerChoice);
+        }
+      };
+
+      const PrintResult = (userWin, userChoice, computerChoice) => {
+        let WhoWin = document.getElementById("WhoWin");
+        if (WhoWin) {
+          WhoWin.innerText = userWin
+            ? `You Win! Your ${userChoice} beats ${computerChoice}`
+            : `Computer Wins! Your ${userChoice} lost to ${computerChoice}`;
+          WhoWin.style.backgroundColor = userWin ? "green" : "red";
+        }
+        if (userWin) {
+          player.innerText = parseInt(player.innerText) + 1;
+        } else {
+          computer.innerText = parseInt(computer.innerText) + 1;
+        }
+      };
+
+      //for each loop
+      choices.forEach((choise) => {
+        //   console.log(choise);
+
+        //click on individual choise
+        choise.addEventListener("click", () => {
+          GamePlay(choise.id);
+        });
+      });
+    </script>
+  </body>
+</html>

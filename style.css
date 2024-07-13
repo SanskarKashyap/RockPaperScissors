@@ -24,6 +24,7 @@ h1 {
     margin-bottom: 0;
     background-color: rgb(23, 23, 23);
     color: white;
+    animation: textChange 5s infinite linear;
 }
 
 .choices {
@@ -64,20 +65,51 @@ h1 {
 }
 
 .score {
-    margin-top: 20px;
-    font-size: 24px;
+    margin-top: 15%;
+    font-size: 200%;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     color: aliceblue;
+    animation: textChange 5s infinite linear;
 }
 
 #WhoWin {
     font-size: 24px;
-    margin-top: 20px;
+    margin-top: 15%;
     display: inline;
     background-color: rgb(84, 52, 105);
     color: white;
     padding: 1rem;
     border-radius: 1rem;
+}
+
+@keyframes textChange {
+    0% {
+        color: #ff0000; /* Red */
+    }
+    12.5% {
+        color: #ff7300; /* Orange */
+    }
+    25% {
+        color: #fffb00; /* Yellow */
+    }
+    37.5% {
+        color: #48ff00; /* Green */
+    }
+    50% {
+        color: #00ffd5; /* Cyan */
+    }
+    62.5% {
+        color: #002bff; /* Blue */
+    }
+    75% {
+        color: #7a00ff; /* Purple */
+    }
+    87.5% {
+        color: #ff00c8; /* Magenta */
+    }
+    100% {
+        color: #ff0000; /* Back to Red */
+    }
 }
